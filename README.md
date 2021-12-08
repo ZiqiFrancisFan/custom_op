@@ -1,0 +1,1 @@
+This repo assumes using TF 2.4. To build the code, use "make". A .so file is generated from the code. To replicate the error, use "python use_p.py".
