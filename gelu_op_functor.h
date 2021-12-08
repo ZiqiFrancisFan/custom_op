@@ -4,6 +4,7 @@
 template <typename Device, typename T> // device type and input/output type as template variables
 struct GeluOpFunctor
 {
+    GeluOpFunctor();
     void operator()(const Device& d, const T* in, T* out, int n_elements);
 };
 

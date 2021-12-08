@@ -42,8 +42,7 @@ private:
 
 #ifdef GOOGLE_CUDA
 
-#define REGISTER_GPU(T) \ 
-
+#define REGISTER_GPU(T) \
 extern template class ExampleFunctor<GPUDevice, T>;
 
 REGISTER_KERNEL_BUILDER( \
