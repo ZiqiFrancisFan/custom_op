@@ -5,9 +5,6 @@
 
 using namespace tensorflow;
 
-using GPUDevice = Eigen::GpuDevice;
-using CPUDevice = Eigen::ThreadPoolDevice;
-
 REGISTER_OP("GeluOp")
     .Attr("T: numbertype")
     .Input("in: T")
@@ -40,14 +37,13 @@ private:
     GeluOpFunctor<Device, T> functor_;
 };
 
-#ifdef GOOGLE_CUDA
+#if GOOGLE_CUDA
 
-#define REGISTER_GPU(T) \
-extern template class ExampleFunctor<GPUDevice, T>;
-
-REGISTER_KERNEL_BUILDER( \
-    Name("GeluOp").Device(DEVICE_GPU).TypeConstraint<T>("T"), \
-    GeluOp<GPUDevice, T>);
+#define REGISTER_GPU(type)                                       \
+extern template class GeluOpFunctor<GPUDevice, type>;            \
+REGISTER_KERNEL_BUILDER(                                         \
+    Name("GeluOp").Device(DEVICE_GPU).TypeConstraint<type>("T"), \
+    GeluOp<GPUDevice, type>);
 
 REGISTER_GPU(float);
 

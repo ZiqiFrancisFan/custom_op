@@ -22,10 +22,10 @@ OBJECTS=$(addsuffix .o, $(basename $(SOURCES)))
 LIBRARY=gelu.so
 
 # Compiler flags
-CPPFLAGS =-std=c++11 $(TF_CFLAGS) -fPIC -fopenmp \
-         -O2 -march=native -mtune=native
+CPPFLAGS =-std=c++11 -DGOOGLE_CUDA=$(TF_CUDA) $(TF_CFLAGS) -fPIC -fopenmp \
+         -O2 -march=native -mtune=native -I /usr/local/cuda/include
 
-NVCCFLAGS =-std=c++11 -DGOOGLE_CUDA=$(TF_CUDA) $(TF_CFLAGS) $(INCLUDES) -I include \
+NVCCFLAGS =-std=c++11 -DGOOGLE_CUDA=$(TF_CUDA) $(TF_CFLAGS) $(INCLUDES) \
         -x cu --compiler-options "-fPIC"  -lineinfo --expt-relaxed-constexpr -DNDEBUG  -use_fast_math -arch=sm_70
 #NVCCFLAGS += -DDOTIMING #print timing for each Kernel Execution
 #NVCCFLAGS += -DCHECKCUDAERROR  #Add CUDA CHECK ERROR after each  Kernel (trouble shooting)
